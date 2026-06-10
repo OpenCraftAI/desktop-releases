@@ -1,0 +1,38 @@
+name: Update latest.json
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  update-latest-json:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Generate latest.json from release assets
+        run: |
+          RELEASE_DATA=$(gh api "repos/${{ github.repository }}/releases/${{ github.event.release.id }}" --jq '{
+            version: .tag_name,
+            publishedAt: .published_at,
+            assets: [.assets[] | {
+              platform: (if (.name | test("\.exe$"; "i")) then "windows" elif (.name | test("\.dmg$"; "i")) then "macos" elif (.name | test("\.AppImage$"; "i")) then "linux" else null end),
+              name: .name,
+              url: .browser_download_url,
+              size: .size
+            } | select(.platform != null)]
+          }')
+          echo "$RELEASE_DATA" > latest.json
+          echo "Generated latest.json for ${{ github.event.release.tag_name }}"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Commit and push latest.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add latest.json
+          git diff --staged --quiet || git commit -m "chore: update latest.json for ${{ github.event.release.tag_name }}"
+          git push
