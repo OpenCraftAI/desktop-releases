@@ -1,5 +1,1 @@
-{
-  "version": "",
-  "publishedAt": "",
-  "assets": []
-}
+{"assets":[{"name":"OpenCraft-AI-1.0.0-setup.exe","platform":"windows","size":103067307,"url":"https://github.com/OpenCraftAI/desktop-releases/releases/download/v1.0.0/OpenCraft-AI-1.0.0-setup.exe"},{"name":"OpenCraft-AI-1.0.0.AppImage","platform":"linux","size":122378515,"url":"https://github.com/OpenCraftAI/desktop-releases/releases/download/v1.0.0/OpenCraft-AI-1.0.0.AppImage"},{"name":"OpenCraft-AI-1.0.0.dmg","platform":"macos","size":114350130,"url":"https://github.com/OpenCraftAI/desktop-releases/releases/download/v1.0.0/OpenCraft-AI-1.0.0.dmg"}],"publishedAt":"2026-06-11T08:13:18Z","version":"v1.0.0"}
