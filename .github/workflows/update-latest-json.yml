@@ -26,7 +26,10 @@ jobs:
             version: .tag_name,
             publishedAt: .published_at,
             assets: [.assets[] | {
-              platform: (if (.name | test("[.]exe$"; "i")) then "windows" elif (.name | test("[.]dmg$"; "i")) then "macos" elif (.name | test("[.]AppImage$"; "i")) then "linux" else null end),
+              platform: (if (.name | test("[.]exe$"; "i")) then "windows"
+                        elif (.name | test("[.]dmg$"; "i")) then "macos"
+                        elif (.name | test("[.](?:AppImage|deb|rpm)$"; "i")) then "linux"
+                        else null end),
               name: .name,
               url: .browser_download_url,
               size: .size
